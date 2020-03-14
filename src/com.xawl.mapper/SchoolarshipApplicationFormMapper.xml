@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.mapper.SchoolarshipApplicationFormMapper">
+	<!-- 表名 -->
+	<sql id="table_name">
+		schoolarshipapplicationform
+	</sql>
+
+	<!-- 标段 -->
+	<sql id="table_colunm"> 
+		app_name,app_id,app_institution,app_grade,app_class,
+		app_schoolship_level,app_major,app_sex,app_nation,app_category,
+		app_annual_results,app_ranking,app_class_size,app_bank_card_num,app_ID_number,
+		app_tel_num,app_award 
+	</sql>
+	
+	
+	<sql id="table_all_colunm">
+		app_name,app_id,app_institution,app_grade,app_class,
+		app_schoolship_level,app_major,app_sex,app_nation,app_category,
+		app_annual_results,app_ranking,app_class_size,app_bank_card_num,app_ID_number,
+		app_tel_num,app_award,app_status 
+	</sql>
+	
+	
+	<!-- 修改申请表字段 -->
+	<sql id="update_colunm">
+			app_name=#{app_name},app_institution=#{app_institution},app_grade=#{app_grade},app_class=#{app_class},app_schoolship_level=#{app_schoolship_level},
+			app_major=#{app_major},app_sex=#{app_sex},app_nation=#{app_nation},app_category=#{app_category},app_annual_results=#{app_annual_results},
+			app_ranking=#{app_ranking},app_class_size=#{app_class_size},app_bank_card_num=#{app_bank_card_num},app_ID_number=#{app_ID_number},app_tel_num=#{app_tel_num},
+			app_award=#{app_award}
+	</sql>
+	
+	
+	
+	<!-- 插入奖学金申请表信息 -->
+	<insert id="insertApplicationForm" parameterType="SchoolarshipApplicationForm" >
+			insert into <include refid="table_name"/>
+			(<include refid="table_colunm"/>)
+			value(#{app_name},#{app_id},#{app_institution},#{app_grade},#{app_class}
+				,#{app_schoolship_level},#{app_major},#{app_sex},#{app_nation},#{app_category}
+				,#{app_annual_results},#{app_ranking},#{app_class_size},#{app_bank_card_num},#{app_ID_number}
+				,#{app_tel_num},#{app_award})
+	</insert>
+	
+	<!-- 查询某个人奖学金申请者信息 -->
+	<select id="findDetailApplicationFormById" parameterType="String" resultType="SchoolarshipApplicationForm">
+		select  <include refid="table_colunm"/>
+		from <include refid="table_name"/>
+		where app_id=#{app_id}
+	</select>
+	
+	<!-- 查询部分奖学金申请者信息 -->
+	<select id="findPartApplicationForm" resultType="SchoolarshipApplicationForm">
+		select app_name,app_id,app_institution,app_grade,app_class,
+				app_schoolship_level,app_major,app_sex,app_nation,app_category,
+				app_annual_results,app_ranking,app_class_size,app_bank_card_num,app_ID_number,
+				app_tel_num,app_status
+		from <include refid="table_name"/>
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 统计表中人数个数 -->
+	<select id="findApplyNum" resultType="int">
+		select count(*) from <include refid="table_name"/>
+	</select>
+	
+	<!-- 查询已通过的学生名单 -->
+	<select id="findPassedApplicationForm" parameterType="Integer" resultType="SchoolarshipApplicationForm">
+		select app_name,app_id,app_institution,app_grade,app_class,
+				app_schoolship_level,app_major,app_sex,app_nation,app_category,
+				app_annual_results,app_ranking,app_class_size,app_status
+		from <include refid="table_name"/>
+		where app_status=1
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 查询已通过的学生名单 不分页 -->
+	<select id="findPassedApplicationFormForExport" resultType="SchoolarshipApplicationForm">
+		select app_name,app_id,app_institution,app_grade,app_class,
+				app_schoolship_level,app_major,app_sex,app_nation,app_category,
+				app_annual_results,app_ranking,app_class_size,app_bank_card_num,app_tel_num,
+				app_ID_number
+		from <include refid="table_name"/>
+		where app_status=1
+	</select>
+	
+	<!-- 统计已通过学生人数 -->
+	<select id="findPassedApplyNum" resultType="int">
+		select count(*) from <include refid="table_name"/>
+		where app_status=1
+	</select>
+	
+	<select id="findBoyNum" resultType="Integer">
+		select count(app_sex)
+		from <include refid="table_name"/>
+		where app_sex='男'
+	</select>
+	
+	
+	
+	<select id="findAll" resultType="SchoolarshipApplicationForm">
+		select <include refid="table_all_colunm"/> 
+		from <include refid="table_name"/>
+	</select>
+	
+	
+	<select id="findApplyProcess" parameterType="String" resultType="Integer">
+		select app_status 
+		from <include refid="table_name"/>
+		where app_id=#{app_id}
+	</select>
+	
+	
+	<!-- 根据学号删除某个申请表 -->
+	<delete id="deleteApplicationFormById" parameterType="String">
+		delete from <include refid="table_name"/>
+		where app_id=#{app_id}
+	</delete>
+	
+	
+	<!-- 根据学号修改某个申请表 -->
+	<update id="updateApplicationFormById" parameterType="SchoolarshipApplicationForm">
+		update <include refid="table_name"/>
+		set   <include refid="update_colunm"/>
+		where app_id=#{app_id}
+	</update>
+	
+	<!-- 根据学号审核通过状态 -->
+	<update id="updateApplicationFormStatusById" parameterType="Map" >
+		update <include refid="table_name"/>
+		set app_status=#{app_status}
+		where app_id=#{app_id}
+	</update>
+
+
+
+</mapper>

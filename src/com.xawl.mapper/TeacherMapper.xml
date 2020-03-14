@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.mapper.TeacherMapper">
+	<!-- 表名 -->
+	<sql id="table_name">
+		teacher_info
+	</sql>
+
+	<!-- 标段 -->
+	<sql id="table_colunm">
+			tea_name,tea_id,tea_institution,tea_sex,tea_nation,
+			tea_ID_number,tea_tel_num,tea_status,tea_job_title,tea_role
+	</sql>
+
+	
+	<!-- 查询所有老师信息-->
+	<select id="findTeacherInfoALL"  resultType="Teacher">
+			select <include refid="table_colunm"/> 
+			from   <include refid="table_name"/>
+			LIMIT #{offset}, #{limit}
+	</select>
+
+	<!-- 查询老师数量 -->
+	<select id="findTeacherNum"  resultType="Integer">
+			select count(*) 
+			from   <include refid="table_name"/>
+	</select>
+	
+	<!-- 根据ID查询某个老师信息 -->
+	<select id="findTeacherInfoById" parameterType="String" resultType="Teacher">
+		select <include refid="table_colunm"/> 
+		from <include refid="table_name"/>
+		where tea_id=#{tea_id}
+	</select>
+	
+	
+	<!-- 根据ID删除某个老师信息 -->
+	<delete id="deteleTeacherById" parameterType="String">
+		delete 
+		from <include refid="table_name"/>
+		where tea_id=#{tea_id}
+	</delete>
+	
+	<!-- 根据学号审核通过状态 -->
+	<update id="updateTeacherStatusById" parameterType="Map">
+		update <include refid="table_name"/>
+		set tea_status=#{tea_status}
+		where tea_id=#{tea_id}
+	</update>
+	
+	 
+
+</mapper>

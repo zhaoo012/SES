@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.mapper.AdminMapper">
+	<!-- 表名 -->
+	<sql id="table_name">
+		admin_info
+	</sql>
+
+	<!-- 标段 -->
+	<sql id="table_colunm">
+		adm_name,adm_id,adm_tel_num,adm_status,adm_role
+	</sql>
+
+	<!-- 查询所有管理员的信息  超级管理员使用-->
+	<select id="findAdminInfoAll" parameterType="Integer" resultType="Admin">
+		select <include refid="table_colunm"/> 
+		from <include refid="table_name"/>
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	
+	
+	
+	 
+
+</mapper>

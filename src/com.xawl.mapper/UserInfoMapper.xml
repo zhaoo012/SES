@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.mapper.UserInfoMapper">
+	<!-- 表名 -->
+	<sql id="table_name">
+		user_info
+	</sql>
+
+	<!-- 标段 -->
+	<sql id="table_colunm">
+		realname,username,password,role
+	</sql>
+
+	
+	
+	<select id="findUserInfoALL" parameterType="String" resultType="UserInfo">
+			select <include refid="table_colunm"/> 
+			from   <include refid="table_name"/>
+			where username=#{username}
+	</select>
+
+
+	<!-- 查询用户权限 -->
+	<select id="findUserRight" parameterType="String" resultType="UserInfo">
+		select role
+		from <include refid="table_name"/>
+		where username=#{username}
+	</select>
+
+	<!-- 根据用户username查询密码 -->
+	<select id="findPwdbyName" parameterType="String" resultType="UserInfo">
+		select password
+		from <include refid="table_name"/>
+		where username=#{username}		
+	</select>
+
+	<!-- 查询用户真实性别 -->
+	<select id="findUserRealName" parameterType="String" resultType="String">
+		select realname
+		from <include refid="table_name"/>
+		where username=#{username};
+	</select>
+	
+	
+	
+	
+	<!-- 修改用户密码 -->
+	<update id="Update_Pwd" parameterType="UserInfo">
+		update
+			<include refid="table_name" />
+		set
+			password=#{password}
+		where
+			username=#{username}
+	</update>
+
+</mapper>
