@@ -1,0 +1,54 @@
+
+
+
+
+.font-center{
+	text-align:center;
+}
+
+
+
+
+/*selfinfo*/
+
+.margin-logo{
+	margin:0 20% 0 20%;
+}
+
+.height100{
+	height: 100px;
+}
+
+.height500{
+	height: 500px;
+}
+
+.height700{
+	height: 700px;
+}
+
+
+
+/*主题页面的背景色*/
+.kh-bg-white{
+	background-color:white ;
+}
+
+
+
+
+
+
+/*bottom-copy*/
+.wechat-img{  
+	width:180px;
+	height:180px;
+}
+
+.height300{
+	height: 300px;
+}
+
+.margin-top30{
+	margin-top: 30px;
+}
