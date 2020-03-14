@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+<link rel="stylesheet" href="../../layui/css/layui.css">
+
+		<link rel="stylesheet" href="../../css/public.css">
+		<link rel="stylesheet" href="../../css/font.css" />
+		<link rel="stylesheet" href="../../css/xadmin.css" />
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" "></script>
+  <script type="text/javascript " src="../../js/xadmin.js "></script>
+<body>
+			<div class="box">
+			    <h2>剩余时间：<button id="subtn" class="clock layui-btn layui-btn-disabled">我已知晓</button></h2>
+			    <span class="layui-word-aux" id="clock">
+			    	2
+			    </span>
+			</div>
+				
+			<button id="test">吖哈哈</button>
+
+</body>
+	
+	
+	<script>
+			 
+		  	var t = 2;
+		  	var end="哦哦";
+			var time = $("#clock")[0];
+			
+			function fun() {
+				t--;
+				if(t <= 0) {
+					$("#subtn").removeClass("layui-btn-disabled");//移除进制btn的样式
+					clearInterval(inter);//清除计时器
+				}
+				time.innerHTML = t;
+			}
+			
+			var inter =setInterval("fun()", 1000); //计时器每隔1s调用一次fun函数
+	</script>
+</html>
